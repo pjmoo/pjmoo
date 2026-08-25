@@ -81,17 +81,27 @@
 
 ---
 
-## 🤖 2nd Project
+## ⚡ 긴급 디지털 업무 매칭 플랫폼
 ### 2nd Team Project
 
-**Spring Boot 기반 팀 프로젝트**
+**24시간 이내 처리가 필요한 디지털 업무를 프리랜서와 빠르게 연결하는 서비스**
 
-Java/Spring 생태계를 중심으로 백엔드, 인증/인가, 데이터 처리, AI 연동을 함께 경험하고 있습니다.
+실시간 가용성과 납기 신뢰도를 기반으로 긴급 업무를 적합한 작업자와 매칭하고, 등록부터 정산까지의 전체 거래 흐름을 구현하는 프로젝트입니다.
+
+**주요 기능**
+- 회원가입·로그인 및 프로필 관리
+- 긴급 업무 등록·수정·삭제
+- 업무 지원 및 작업자 선택
+- 작업자 선택 시 1:1 채팅방 자동 생성
+- 작업 진행·제출·수정 요청·완료 승인
+- 재화 예약·반환·정산
+- 비공개 첨부 파일 다운로드 및 접근 제어
+- AI 기반 의뢰서 구조화·요약·안전성 검사
 
 **Tech Stack**  
-`Java 17` `Spring Boot` `Spring Security` `JPA` `PostgreSQL` `Redis` `Thymeleaf` `Spring AI`
+`Java 17` `Spring Boot` `Spring Security` `JPA` `PostgreSQL` `Redis` `Thymeleaf` `Spring AI` `OpenAI API`
 
-[🔗 Repository](https://github.com/pjmoo/2nd_project)
+[🔗 Repository](https://github.com/AIBE7-Third-Team-D3BUG/2nd_project)
 
 ---
 
