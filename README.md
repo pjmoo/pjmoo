@@ -5,7 +5,10 @@
 
 <p align="center">
   <a href="./RESUME.md">
-    <img src="https://img.shields.io/badge/📄%20상세%20이력서(RESUME)%20보러가기-0969DA?style=for-the-badge&logoColor=white" alt="Resume Badge" />
+    <img src="https://img.shields.io/badge/📄%20상세%20이력서(Markdown)%20보기-0969DA?style=for-the-badge&logoColor=white" alt="Resume Badge" />
+  </a>
+  <a href="./pjmoo_이력서_초안.docx">
+    <img src="https://img.shields.io/badge/📥%20이력서(Word%20.docx)%20다운로드-2B579A?style=for-the-badge&logo=microsoftword&logoColor=white" alt="Word Badge" />
   </a>
 </p>
 
