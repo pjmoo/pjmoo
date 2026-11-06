@@ -97,7 +97,6 @@
   - 모집 기한이 지난 업무 자동 취소(스케줄러) 및 의뢰자 취소·회원 탈퇴 시 품 반환, 분쟁 신고자별 정산
   - 프로필 품 거래 이력 조회 및 업무 삭제 시에도 거래 기록 보존
   - Kakao & Google OAuth2(Authorization Code) 소셜 로그인 연동 및 계정 매핑
-  - 채팅방 · 업무 · 지원자 목록 N+1 개선(IN 일괄 조회 + GROUP BY 집계)
   - Render 배포용 Dockerfile 작성, 전역 오류 화면 처리, WebSocket 허용 출처 same-origin 제한
 - **Tech Stack**: `Java 17`, `Spring Boot`, `Spring Data JPA`, `Spring Security`, `OAuth2`, `PostgreSQL (Supabase)`, `Flyway`, `WebSocket (STOMP)`, `Docker`, `Render`
 
