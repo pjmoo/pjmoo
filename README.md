@@ -3,15 +3,6 @@
 <h1 align="center">Hi 👋, I'm 박정민 (pjmoo)</h1>
 <h3 align="center">사용자 경험과 서비스 운영 안정성을 함께 고민하는 백엔드 개발자입니다.</h3>
 
-<p align="center">
-  <a href="./RESUME.md">
-    <img src="https://img.shields.io/badge/📄%20상세%20이력서(Markdown)%20보기-0969DA?style=for-the-badge&logoColor=white" alt="Resume Badge" />
-  </a>
-  <a href="./pjmoo_이력서_초안.docx">
-    <img src="https://img.shields.io/badge/📥%20이력서(Word%20.docx)%20다운로드-2B579A?style=for-the-badge&logo=microsoftword&logoColor=white" alt="Word Badge" />
-  </a>
-</p>
-
 ---
 
 ## 👨‍💻 About Me
@@ -77,14 +68,17 @@
 
 노트북의 영수증, 보증서, 수리 이력 등 제품 여권을 디지털로 관리하고, 신뢰할 수 있는 이력을 바탕으로 안전하게 거래하는 플랫폼입니다.
 
-- **주요 역할**: 인증·보안 아키텍처 구축 및 노트북 MVP 프론트엔드 UI/UX 통합
+- **주요 역할**: 회원 인증·세션·보안 설계 및 구현, 노트북 MVP 프론트엔드 UI 통합
 - **핵심 기여**:
-  - `HttpOnly` 쿠키 기반 JWT 인증, Redis 토큰 블랙리스트 & Refresh Token 관리, CSRF 방어
-  - 무차별 대입 공격(Brute-force) 방어를 위한 로그인 Rate Limit 적용
-  - Supabase Auth 연동 이메일 인증 발송/재전송 및 미인증 계정 자동 정리 스케줄러 구현
-  - 채팅방 나가기/퇴장 처리 및 사용자 확인 모달 UX 구현
-  - MVP 정책에 맞춘 카테고리 비활성화 및 상단 네비게이션 개편, 팀원 간 브랜치 병합 충돌 조율
-- **Tech Stack**: `Java 17`, `Spring Boot`, `Spring Security`, `PostgreSQL`, `Redis`, `Flyway`, `Docker Compose`, `Vanilla JS`
+  - `HttpOnly` 쿠키 기반 JWT(HS256) 인증, CSRF Double Submit Cookie 방어
+  - Redis 기반 1회용 Refresh Token 교체(GETDEL)와 로그아웃 Access Token `jti` 블랙리스트(TTL = 남은 수명)
+  - Redis SET NX + 30분 lease로 계정당 1세션(동시 로그인 차단), 같은 브라우저 재로그인 허용
+  - 무차별 대입 방어를 위한 로그인 Rate Limit(이메일 5회 · IP 20회, 15분 고정 윈도우)
+  - Supabase Auth 연동 이메일 인증 발송/재전송 및 미인증 계정 자동 정리 스케줄러(조회 실패 시 삭제 보류)
+  - 제품 일련번호 AES-256-GCM 암호화 보관 및 HMAC 지문 기반 중복 등록 검사
+  - 배포 전 공유 DB Flyway 이력 복구(멱등 마이그레이션 · 이력 정규화 스크립트 · PostgreSQL 통합 테스트)
+  - 채팅방 나가기 및 확인 UI, MVP 정책에 맞춘 카테고리 비활성화와 상단 네비게이션 개편
+- **Tech Stack**: `Java 17`, `Spring Boot`, `Spring Security`, `PostgreSQL`, `Redis`, `Flyway`, `JUnit 5`, `Vanilla JS`
 
 [🔗 Repository](https://github.com/pjmoo/AIBE7_FinalProject_Team1)
 
@@ -97,13 +91,14 @@
 
 24시간 이내 처리가 필요한 디지털 업무(개발 오류 수정, 문서/디자인 보완 등)를 프리랜서와 신속하게 매칭하는 플랫폼입니다.
 
-- **주요 역할**: 지원자 비교 및 작업자 매칭, 업무 취소/정산 트랜잭션, OAuth2 소셜 로그인, Render 클라우드 배포
+- **주요 역할**: 지원자 비교 및 작업자 매칭, 업무 취소·만료 시 품 반환, OAuth2 소셜 로그인, Render 클라우드 배포
 - **핵심 기여**:
-  - 의뢰인 전용 지원자 비교 대시보드(프로필/평점/기술 비교) 및 작업자 매칭/중복 지원 방어
-  - 업무 상태 전이(등록·매칭·완료·취소)에 따른 재화(품) 예약·반환·정산 트랜잭션 구현
-  - Kakao & Google OAuth2 소셜 로그인 연동 및 계정 매핑
-  - STOMP WebSocket 채팅 권한 검증 및 비공개 첨부 파일 서명 URL(5분 유효) 발급
-  - Render 배포용 Dockerfile 작성 및 전역 오류 핸들링/목록 쿼리 성능 개선
+  - 의뢰인 전용 지원자 비교 페이지(프로필/평점/기술 비교)와 지원 상태 전이(지원·선택·취소·재지원), 중복 지원 방지
+  - 모집 기한이 지난 업무 자동 취소(스케줄러) 및 의뢰자 취소·회원 탈퇴 시 품 반환, 분쟁 신고자별 정산
+  - 프로필 품 거래 이력 조회 및 업무 삭제 시에도 거래 기록 보존
+  - Kakao & Google OAuth2(Authorization Code) 소셜 로그인 연동 및 계정 매핑
+  - 채팅방 · 업무 · 지원자 목록 N+1 개선(IN 일괄 조회 + GROUP BY 집계)
+  - Render 배포용 Dockerfile 작성, 전역 오류 화면 처리, WebSocket 허용 출처 same-origin 제한
 - **Tech Stack**: `Java 17`, `Spring Boot`, `Spring Data JPA`, `Spring Security`, `OAuth2`, `PostgreSQL (Supabase)`, `Flyway`, `WebSocket (STOMP)`, `Docker`, `Render`
 
 [🔗 Repository](https://github.com/pjmoo/2nd_project)
@@ -115,13 +110,14 @@
 
 **지역 축제 기반 AI 맞춤 여행 추천 플랫폼**
 
-사용자의 여행 성향을 분석하여 최적의 지역 축제와 연계 여행 일정을 추천하는 커뮤니티 서비스입니다.
+지역 축제 정보와 AI 대화를 바탕으로 여행지를 추천하는 커뮤니티 서비스입니다.
 
-- **주요 역할**: 커뮤니티·지도 UI 인터랙션 구현 및 Supabase 연동
+- **주요 역할**: AI 추천 챗봇 · 지도 · 메인/마이페이지 화면 구현 및 Supabase 연동
 - **핵심 기여**:
-  - 여행 성향 진단 인터페이스 및 축제 추천 결과 카드 컴포넌트 개발
-  - 카카오 지도 API 연동 및 축제 위치 마커/연계 일정 표시
-  - Supabase 기반 회원 인증, 게시글 CRUD 및 마이페이지 연동
+  - Groq LLM과 한국관광공사 Tour API를 연동한 대화형 축제·여행 추천 챗봇(Express 서버) 구현
+  - 카카오 지도 API 연동, 축제 위치 마커 표시 및 지도 검색·필터
+  - 메인 페이지 히어로 슬라이더·키워드 검색, 마이페이지·회원 탈퇴·게시글 삭제 Supabase 연동
+  - 카카오/구글 소셜 로그인 버튼 및 로그인 상태 유지, 게시글 카드 말줄임·펼치기 UI
 - **Tech Stack**: `HTML5`, `CSS3`, `JavaScript`, `Node.js`, `Express.js`, `Supabase`
 
 [🔗 Repository](https://github.com/pjmoo/AIBE7-Project1-Team01)
@@ -148,9 +144,10 @@
 **Spring AI와 VectorStore 임베딩 기반 AI 상담 챗봇 서비스**
 
 - Google Gemini API 및 Spring AI 프레임워크 연동
-- VectorStore 기반 RAG(검색 증강 생성)를 구축하여 맞춤형 상담 답변 제공
-- `JpaChatMemory`를 구현하여 다중 사용자 세션 및 대화 문맥 보존
-- **Tech Stack**: `Java 17`, `Spring Boot`, `Spring AI`, `Google Gemini API`, `RAG`, `Spring Data JPA`, `PostgreSQL`
+- 사용자 메시지를 `conversationId` 메타데이터와 함께 pgvector에 임베딩하고, 로그인 사용자의 대화만 필터링해 검색하는 RAG 구성
+- RAG 실습: TextReader → TokenTextSplitter(200/1000 토큰) → gemini-embedding-001(1536차원) → PgVectorStore 적재, QuestionAnswerAdvisor(topK 4 · threshold 0.5) 검색·생성
+- JPA 기반 `ChatMemoryRepository`를 구현해 사용자별 대화 문맥(최근 20건) 영속화
+- **Tech Stack**: `Java 17`, `Spring Boot`, `Spring AI`, `Google Gemini API`, `pgvector`, `Spring Data JPA`, `PostgreSQL`
 
 [🔗 WorryDoll Repository](https://github.com/pjmoo/260731_worrydoll) · [🔗 Spring AI 실습](https://github.com/pjmoo/260728_springai) · [🔗 RAG 실습](https://github.com/pjmoo/260730_rag)
 
